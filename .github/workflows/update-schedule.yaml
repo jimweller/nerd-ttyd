@@ -76,6 +76,7 @@ jobs:
           cp -r html ttyd/
           cat index.scss >>ttyd/html/src/style/index.scss
           sed -i -e "/rules: \[/r webpack.config.js" -i -e "/rules: \[/d" ttyd/html/webpack.config.js
+          sed -i 's/this.xterm.open(this.container)/await document.fonts.ready;\n        this.xterm.open(this.container)/' ttyd/html/src/components/terminal/index.tsx
 
           # Frontend
           pushd ttyd/html 1>/dev/null
@@ -127,4 +128,4 @@ jobs:
           artifacts: "release/*"
           tag: "${{ steps.check.outputs.tag || steps.force.outputs.tag }}"
           name: "nerd-ttyd ${{ steps.check.outputs.tag || steps.force.outputs.tag }}"
-          body: "nerd-ttyd ${{ steps.check.outputs.tag || steps.force.outputs.tag }} with font-display:block fix."
+          body: "nerd-ttyd ${{ steps.check.outputs.tag || steps.force.outputs.tag }} with font-display:block and document.fonts.ready fixes."
