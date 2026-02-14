@@ -77,6 +77,7 @@ jobs:
           cat index.scss >>ttyd/html/src/style/index.scss
           sed -i -e "/rules: \[/r webpack.config.js" -i -e "/rules: \[/d" ttyd/html/webpack.config.js
           sed -i 's/this.xterm.open(this.container)/await document.fonts.ready;\n        this.xterm.open(this.container)/' ttyd/html/src/components/terminal/index.tsx
+          sed -i '/terminal.open(parent);/{n;s/fitAddon.fit();/fitAddon.fit();\n        requestAnimationFrame(() => fitAddon.fit());/}' ttyd/html/src/components/terminal/xterm/index.ts
 
           # Frontend
           pushd ttyd/html 1>/dev/null
